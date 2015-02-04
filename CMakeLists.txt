@@ -5,9 +5,18 @@ find_package(Qt5Widgets REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON) # Both source and binary
 
-add_executable(TextFinder TextFinder.cpp TextFinder.h TextFinder.ui main.cpp)
+add_executable(
+    TextFinder
+    TextFinder.cpp
+    TextFinder.h
+    TextFinder.ui
+    TextFinder.qrc
+    main.cpp
+    input.txt
+)
 
 target_link_libraries(TextFinder Qt5::Widgets)

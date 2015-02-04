@@ -1,0 +1,4 @@
+This example was built with CMake.
+
+Originally from: http://doc.qt.io/qtcreator/creator-writing-program.html
+Git: https://github.com/forexample/qt-cmake
