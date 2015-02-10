@@ -4,14 +4,27 @@ set(BU_CHMOD_BUNDLE_ITEMS ON)
 # Do not use @CMAKE_INSTALL_PREFIX@ since this file will be
 # configured before cpack stage
 
-set(content "${CMAKE_INSTALL_PREFIX}/TextFinder.app/Contents")
+if(CMAKE_MACOSX_BUNDLE)
+  set(qt_conf_dest "TextFinder.app/Contents/Resources")
+else()
+  set(qt_conf_dest "bin")
+endif()
 
-file(WRITE "${content}/Resources/qt.conf" "")
+file(WRITE "${CMAKE_INSTALL_PREFIX}/${qt_conf_dest}/qt.conf" "")
+
+# ${CMAKE_EXECUTABLE_SUFFIX} is empty
+set(app "TextFinder@CMAKE_EXECUTABLE_SUFFIX@")
+if(CMAKE_MACOSX_BUNDLE)
+  set(app "${app}.app")
+else()
+  set(app "bin/${app}")
+endif()
+set(app "${CMAKE_INSTALL_PREFIX}/${app}")
 
 file(
     GLOB_RECURSE
     QTPLUGINS
-    "${content}/MacOS/platforms/*${CMAKE_SHARED_LIBRARY_SUFFIX}"
+    "${CMAKE_INSTALL_PREFIX}/${platform_dest}/platforms/*${CMAKE_SHARED_LIBRARY_SUFFIX}"
 )
 
-fixup_bundle("${CMAKE_INSTALL_PREFIX}/TextFinder.app" "${QTPLUGINS}" "")
+fixup_bundle("${app}" "${QTPLUGINS}" "")
