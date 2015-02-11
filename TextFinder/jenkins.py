@@ -19,6 +19,13 @@ def do_call(args):
     print(error)
     sys.exit(1)
 
+def get_cpack_generator():
+  if platform.system() == 'Windows':
+    return 'NSIS'
+  if platform.system() == 'Darwin':
+    return 'DragNDrop'
+  return 'TGZ'
+
 if platform.system() == 'Windows':
   do_call(['where', 'cmake'])
 else:
@@ -38,17 +45,25 @@ if os.path.exists(install_dir):
 proj_dir = os.getcwd()
 
 build_type = 'Release'
-cpack_generator = 'NSIS'
+cpack_generator = get_cpack_generator()
 
-do_call([
+args = [
     'cmake',
     '-DCMAKE_BUILD_TYPE={}'.format(build_type),
     '-DCMAKE_INSTALL_PREFIX={}'.format(install_dir),
-    '-Tv120_xp',
-    '-GVisual Studio 12 2013 Win64',
+    '-DCPACK_GENERATOR={}'.format(cpack_generator),
     '-H{}'.format(proj_dir),
     '-B{}'.format(build_dir)
-])
+]
+
+if platform.system() == 'Windows':
+  args.append('-Tv120_xp')
+  args.append('-GVisual Studio 12 2013 Win64')
+
+if platform.system() == 'Darwin':
+  args.append('-DCMAKE_MACOSX_BUNDLE=ON')
+
+do_call(args)
 
 do_call([
      'cmake',
