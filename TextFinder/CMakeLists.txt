@@ -36,10 +36,12 @@ else()
   set(platform_dest bin)
 endif()
 
-install(
-    DIRECTORY "${Qt5Widgets_DIR}/../../../plugins/platforms"
-    DESTINATION ${platform_dest}
-)
+if(APPLE OR WIN32)
+  install(
+      DIRECTORY "${Qt5Widgets_DIR}/../../../plugins/platforms"
+      DESTINATION ${platform_dest}
+  )
+endif()
 
 if(MSVC)
   # Install libraries manually (workaround for cpack)
@@ -71,8 +73,10 @@ if(MSVC)
   endforeach()
 endif()
 
-set(gen "${CMAKE_CURRENT_BINARY_DIR}/fixup.cmake")
-configure_file("cmake/fixup.cmake.in" "${gen}" @ONLY)
-install(SCRIPT "${gen}")
+if(APPLE OR WIN32)
+  set(gen "${CMAKE_CURRENT_BINARY_DIR}/fixup.cmake")
+  configure_file("cmake/fixup.cmake.in" "${gen}" @ONLY)
+  install(SCRIPT "${gen}")
+endif()
 
 include("cmake/pack.cmake")
