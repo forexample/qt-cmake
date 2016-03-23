@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(TextFinder VERSION 1.0.0)
 
+hunter_add_package(Qt)
 find_package(Qt5Widgets REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
@@ -20,6 +21,12 @@ add_executable(
 )
 
 target_link_libraries(TextFinder Qt5::Widgets)
+
+if(APPLE)
+  # Have to link it manually because of cyclic dependencies in Qt
+  find_package(Qt5PrintSupport REQUIRED)
+  target_link_libraries(TextFinder Qt5::PrintSupport)
+endif()
 
 install(
     TARGETS TextFinder
@@ -73,7 +80,7 @@ if(MSVC)
   endforeach()
 endif()
 
-if(APPLE OR WIN32)
+if((APPLE OR WIN32) AND NOT HUNTER_ENABLED)
   set(gen "${CMAKE_CURRENT_BINARY_DIR}/fixup.cmake")
   configure_file("cmake/fixup.cmake.in" "${gen}" @ONLY)
   install(SCRIPT "${gen}")
