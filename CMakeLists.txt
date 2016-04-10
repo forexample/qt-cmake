@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.0)
 
 include("gate/cmake/HunterGate.cmake")
 HunterGate(
-    URL "https://github.com/ingenue/hunter/archive/experimental-0.tar.gz"
-    SHA1 "ab3991e1bb5ccb68ef52975094dee2be2cc875a0"
+    URL "https://github.com/ingenue/hunter/archive/experimental-1.tar.gz"
+    SHA1 "1e1f143deba218ecc4a9f58ab612c71ffd2ca27a"
 )
 
 string(COMPARE NOTEQUAL "$ENV{TRAVIS_TAG}" "" travis_deploy)
