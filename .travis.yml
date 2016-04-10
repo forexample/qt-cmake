@@ -42,8 +42,8 @@ env:
   # - TOOLCHAIN=clang-libstdcxx CONFIG=Debug
   # - TOOLCHAIN=xcode CONFIG=Debug
   # - TOOLCHAIN=xcode CONFIG=Release
-  - TOOLCHAIN=osx-10-9 CONFIG=Debug EXTRA="--pack DragNDrop --fwd CMAKE_MACOSX_BUNDLE=ON"
-  - TOOLCHAIN=osx-10-9 CONFIG=Release EXTRA="--pack DragNDrop --fwd CMAKE_MACOSX_BUNDLE=ON"
+  - TOOLCHAIN=gcc-4-8 CONFIG=Debug EXTRA="--pack TBZ2"
+  - TOOLCHAIN=gcc-4-8 CONFIG=Release EXTRA="--pack TBZ2"
   # - TOOLCHAIN=gcc CONFIG=Debug
   # - TOOLCHAIN=gcc CONFIG=Release
   # - TOOLCHAIN=gcc-4-8 CONFIG=Release
@@ -93,9 +93,9 @@ matrix:
     ### OSX excludes ###
     # TOOLCHAIN=gcc works fine on OSX
     - os: osx
-      env: TOOLCHAIN=gcc-4-8 CONFIG=Debug
+      env: TOOLCHAIN=gcc-4-8 CONFIG=Debug EXTRA="--pack TBZ2"
     - os: osx
-      env: TOOLCHAIN=gcc-4-8 CONFIG=Release
+      env: TOOLCHAIN=gcc-4-8 CONFIG=Release EXTRA="--pack TBZ2"
 
     # https://github.com/travis-ci-tester/travis-test-mac-clang-address-sanitizer
     - os: osx
